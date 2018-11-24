@@ -3,11 +3,7 @@ describe "SerpApi Desktop JSON" do
   describe "Images result for Apple" do
 
     before :all do
-      host = 'serpapi.com'
-      if ENV['SERPAPI_MODE'] == 'dev'
-        host = 'localhost:3000'
-      end
-      @response = HTTP.get 'http://' + host + '/search.json?q=apple&tbm=isch&location=Dallas&hl=en&gl=us&source=test'
+      @response = HTTP.get 'https://serpapi.com/search.json?q=apple&tbm=isch&location=Dallas&hl=en&gl=us&source=test'
       @json = @response.parse
     end
 
