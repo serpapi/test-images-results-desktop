@@ -1,13 +1,16 @@
 describe "SerpApi Desktop JSON" do
 
-  describe "Images result for Apple" do
+  before(:all) do
+     @host = 'serpapi.com'
+     if ENV['SERPAPI_MODE'] == 'dev'
+        @host = 'localhost:3000'
+     end
+  end
+
+  describe "Images results for apple and ijn = 0" do
 
     before :all do
-      host = 'serpapi.com'
-      if ENV['SERPAPI_MODE'] == 'dev'
-        host = 'localhost:3000'
-      end
-      @response = HTTP.get 'http://' + host + '/search.json?q=apple&tbm=isch&location=Dallas&hl=en&gl=us&source=test'
+      @response = HTTP.get 'http://' + @host + '/search.json?q=apple&tbm=isch&ijn=0&location=Dallas&hl=en&gl=us&source=test'
       @json = @response.parse
     end
 
@@ -59,6 +62,154 @@ describe "SerpApi Desktop JSON" do
       end
 
     end
+  end
+
+  describe "Images results for apple and ijn = 1" do
+
+    before :all do
+      @response = HTTP.get 'http://' + @host + '/search.json?q=apple&tbm=isch&ijn=1&location=Dallas&hl=en&gl=us&source=test'
+      @json = @response.parse
+    end
+
+    it "returns http success" do
+      expect(@response.code).to be(200)
+    end
+
+    it "contains News Results array" do
+      expect(@json["images_results"]).to be_an(Array)
+    end
+
+    it "News Results array has more than 10 results" do
+      expect(@json["images_results"].size).to eq(100)
+    end
+
+    describe "has a first news results" do
+
+      before :all do
+        @first_result = @json["images_results"][0]
+      end
+
+      it "has to be first" do
+        expect(@first_result["position"]).to be(101)
+      end
+
+      it "has a thumbnail" do
+        expect(@first_result["thumbnail"]).to_not be_empty
+      end
+
+      it "has a original" do
+        expect(@first_result["original"]).to_not be_empty
+      end
+
+      it "has a title" do
+        expect(@first_result["title"]).to_not be_empty
+      end
+
+      it "has a source" do
+        expect(@first_result["source"]).to_not be_empty
+      end
+    end
+
+    describe "has a last news results" do
+      before :all do
+        @last_result = @json["images_results"][99]
+      end
+
+      it "has to be first" do
+        expect(@last_result["position"]).to be(200)
+      end
+
+      it "has a thumbnail" do
+        expect(@last_result["thumbnail"]).to_not be_empty
+      end
+
+      it "has a original" do
+        expect(@last_result["original"]).to_not be_empty
+      end
+
+      it "has a title" do
+        expect(@last_result["title"]).to_not be_empty
+      end
+
+      it "has a source" do
+        expect(@last_result["source"]).to_not be_empty
+      end
+    end
+
+  end
+
+  describe "Images results for apple and ijn = 2" do
+
+    before :all do
+      @response = HTTP.get 'http://' + @host + '/search.json?q=apple&tbm=isch&ijn=2&location=Dallas&hl=en&gl=us&source=test'
+      @json = @response.parse
+    end
+
+    it "returns http success" do
+      expect(@response.code).to be(200)
+    end
+
+    it "object array" do
+      expect(@json["images_results"]).to be_an(Array)
+    end
+
+    it "100 elements in the array" do
+      expect(@json["images_results"].size).to eq(100)
+    end
+
+    describe "has a first news results" do
+
+      before :all do
+        @first_result = @json["images_results"][0]
+      end
+
+      it "has to be first" do
+        expect(@first_result["position"]).to be(201)
+      end
+
+      it "has a thumbnail" do
+        expect(@first_result["thumbnail"]).to_not be_empty
+      end
+
+      it "has a original" do
+        expect(@first_result["original"]).to_not be_empty
+      end
+
+      it "has a title" do
+        expect(@first_result["title"]).to_not be_empty
+      end
+
+      it "has a source" do
+        expect(@first_result["source"]).to_not be_empty
+      end
+   end
+
+    describe "has a last news results" do
+      before :all do
+        @last_result = @json["images_results"][99]
+      end
+
+      it "has to be first" do
+        expect(@last_result["position"]).to be(300)
+      end
+
+      it "has a thumbnail" do
+        expect(@last_result["thumbnail"]).to_not be_empty
+      end
+
+      it "has a original" do
+        expect(@last_result["original"]).to_not be_empty
+      end
+
+      it "has a title" do
+        expect(@last_result["title"]).to_not be_empty
+      end
+
+      it "has a source" do
+        expect(@last_result["source"]).to_not be_empty
+      end
+    end
+
   end
 
 end
