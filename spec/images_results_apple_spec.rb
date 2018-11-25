@@ -1,16 +1,16 @@
 describe "SerpApi Desktop JSON" do
 
   before(:all) do
-     @host = 'serpapi.com'
+     @host = 'https://serpapi.com'
      if ENV['SERPAPI_MODE'] == 'dev'
-        @host = 'localhost:3000'
+        @host = 'http://localhost:3000'
      end
   end
 
   describe "Images results for apple and ijn = 0" do
 
     before :all do
-      @response = HTTP.get 'http://' + @host + '/search.json?q=apple&tbm=isch&ijn=0&location=Dallas&hl=en&gl=us&source=test'
+      @response = HTTP.get @host + '/search.json?q=apple&tbm=isch&ijn=0&location=Dallas&hl=en&gl=us&source=test'
       @json = @response.parse
     end
 
@@ -67,7 +67,7 @@ describe "SerpApi Desktop JSON" do
   describe "Images results for apple and ijn = 1" do
 
     before :all do
-      @response = HTTP.get 'http://' + @host + '/search.json?q=apple&tbm=isch&ijn=1&location=Dallas&hl=en&gl=us&source=test'
+      @response = HTTP.get @host + '/search.json?q=apple&tbm=isch&ijn=1&location=Dallas&hl=en&gl=us&source=test'
       @json = @response.parse
     end
 
@@ -141,7 +141,7 @@ describe "SerpApi Desktop JSON" do
   describe "Images results for apple and ijn = 2" do
 
     before :all do
-      @response = HTTP.get 'http://' + @host + '/search.json?q=apple&tbm=isch&ijn=2&location=Dallas&hl=en&gl=us&source=test'
+      @response = HTTP.get @host + '/search.json?q=apple&tbm=isch&ijn=2&location=Dallas&hl=en&gl=us&source=test'
       @json = @response.parse
     end
 

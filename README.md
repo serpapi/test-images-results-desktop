@@ -1,4 +1,4 @@
-# Images Results Desktop (BETA)
+# Images Results Desktop
 
 [![Build Status](https://travis-ci.org/serpapi/test-images-results-desktop.svg?branch=master)](https://travis-ci.org/serpapi/test-images-results-desktop)
 
