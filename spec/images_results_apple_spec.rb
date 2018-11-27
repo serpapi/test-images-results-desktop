@@ -1,4 +1,4 @@
-describe "SerpApi Desktop JSON" do
+describe "Images resutls - desktop - json" do
 
   before(:all) do
      @host = 'https://serpapi.com'
@@ -42,7 +42,7 @@ describe "SerpApi Desktop JSON" do
       end
 
       it "has to be first" do
-        expect(@first_result["position"]).to be(1)
+        expect(@first_result["position"]).to eq(1)
       end
 
       it "has a thumbnail" do
@@ -90,7 +90,7 @@ describe "SerpApi Desktop JSON" do
       end
 
       it "has to be first" do
-        expect(@first_result["position"]).to be(101)
+        expect(@first_result["position"]).to eq(101)
       end
 
       it "has a thumbnail" do
@@ -116,7 +116,7 @@ describe "SerpApi Desktop JSON" do
       end
 
       it "has to be first" do
-        expect(@last_result["position"]).to be(200)
+        expect(@last_result["position"]).to eq(200)
       end
 
       it "has a thumbnail" do
@@ -146,7 +146,7 @@ describe "SerpApi Desktop JSON" do
     end
 
     it "returns http success" do
-      expect(@response.code).to be(200)
+      expect(@response.code).to eq(200)
     end
 
     it "object array" do
@@ -164,7 +164,7 @@ describe "SerpApi Desktop JSON" do
       end
 
       it "has to be first" do
-        expect(@first_result["position"]).to be(201)
+        expect(@first_result["position"]).to eq(201)
       end
 
       it "has a thumbnail" do
@@ -190,7 +190,7 @@ describe "SerpApi Desktop JSON" do
       end
 
       it "has to be first" do
-        expect(@last_result["position"]).to be(300)
+        expect(@last_result["position"]).to eq(300)
       end
 
       it "has a thumbnail" do
@@ -210,6 +210,53 @@ describe "SerpApi Desktop JSON" do
       end
     end
 
+  end
+
+  describe "Images results for apple with tbs=itp:photos,isz:l and ijn=0" do
+
+    before :all do
+      @response = HTTP.get @host + '/search.json?q=apple&tbm=isch&ijn=0&tbs=itp:photos,isz:l&location=Dallas&hl=en&gl=us&source=test'
+      @json = @response.parse
+    end
+
+    it "returns http success" do
+      expect(@response.code).to eq(200)
+    end
+
+    it "object array" do
+      expect(@json["images_results"]).to be_an(Array)
+    end
+
+    it "100 elements in the array" do
+      expect(@json["images_results"].size).to eq(100)
+    end
+
+    describe "has a first news results" do
+
+      before :all do
+        @first_result = @json["images_results"].first
+      end
+
+      it "has to be first" do
+        expect(@first_result["position"]).to eq(1)
+      end
+
+      it "has a thumbnail" do
+        expect(@first_result["thumbnail"]).to_not be_empty
+      end
+
+      it "has a original" do
+        expect(@first_result["original"]).to_not be_empty
+      end
+
+      it "has a title" do
+        expect(@first_result["title"]).to_not be_empty
+      end
+
+      it "has a source" do
+        expect(@first_result["source"]).to_not be_empty
+      end
+   end
   end
 
 end
