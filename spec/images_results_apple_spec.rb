@@ -3,6 +3,7 @@ describe "Images resutls - desktop - json" do
   before(:all) do
      @host = 'https://serpapi.com'
      if ENV['SERPAPI_MODE'] == 'dev'
+        puts "use local development server"
         @host = 'http://localhost:3000'
      end
   end
@@ -10,7 +11,7 @@ describe "Images resutls - desktop - json" do
   describe "Images results for apple and ijn = 0" do
 
     before :all do
-      @response = HTTP.get @host + '/search.json?q=apple&tbm=isch&ijn=0&location=Dallas&hl=en&gl=us&source=test'
+      @response = HTTP.get @host + '/search.json?q=Coffee&location=Austin%2C+Texas%2C+United+States&hl=en&gl=us&output=json&tbm=isch&ijn=0&source=test'
       @json = @response.parse
     end
 
@@ -23,7 +24,7 @@ describe "Images resutls - desktop - json" do
     end
 
     it "News Results array has more than 10 results" do
-      expect(@json["images_results"].size).to eq(100)
+      expect(@json["images_results"].size).to be > 50
     end
 
     # sample of result
@@ -62,12 +63,38 @@ describe "Images resutls - desktop - json" do
       end
 
     end
+
+    describe "verify chips at the top of the page" do
+
+      it "number of chips greater than 5" do
+        expect(@json["chips"].size).to be > 5
+      end
+
+      it 'verify the first chip field' do
+        chip  = @json["chips"].first
+        expect(chip['name']).to_not be_empty
+        expect(chip['link']).to_not be_empty
+        expect(chip['link']).to match(/search\?/)
+        expect(chip['thumbnail']).to_not be_empty
+        expect(chip['thumbnail']).to match(/^data:image\/jpeg;base64/)
+      end
+
+      it 'verify the last chip field' do
+        chip  = @json["chips"].last
+        expect(chip['name']).to_not be_empty
+        expect(chip['link']).to_not be_empty
+        expect(chip['link']).to match(/search\?/)
+        expect(chip['thumbnail']).to_not be_empty
+        expect(chip['thumbnail']).to match(/^https:\/\/encrypted-tbn0.gstatic.com/)
+      end
+
+    end
   end
 
   describe "Images results for apple and ijn = 1" do
 
     before :all do
-      @response = HTTP.get @host + '/search.json?q=apple&tbm=isch&ijn=1&location=Dallas&hl=en&gl=us&source=test'
+      @response = HTTP.get @host + '/search.json?q=Coffee&location=Austin%2C+Texas%2C+United+States&hl=en&gl=us&output=json&tbm=isch&ijn=1&source=test'
       @json = @response.parse
     end
 
@@ -80,7 +107,7 @@ describe "Images resutls - desktop - json" do
     end
 
     it "News Results array has more than 10 results" do
-      expect(@json["images_results"].size).to eq(100)
+      expect(@json["images_results"].size).to be > 50
     end
 
     describe "has a first news results" do
@@ -112,7 +139,7 @@ describe "Images resutls - desktop - json" do
 
     describe "has a last news results" do
       before :all do
-        @last_result = @json["images_results"][99]
+        @last_result = @json["images_results"].last
       end
 
       it "has to be first" do
@@ -136,12 +163,16 @@ describe "Images resutls - desktop - json" do
       end
     end
 
+    it "no chips if ijn == 1" do
+      expect(@json["chips"]).to be_empty
+    end
+
   end
 
   describe "Images results for apple and ijn = 2" do
 
     before :all do
-      @response = HTTP.get @host + '/search.json?q=apple&tbm=isch&ijn=2&location=Dallas&hl=en&gl=us&source=test'
+      @response = HTTP.get @host + '/search.json?q=Coffee&location=Austin%2C+Texas%2C+United+States&hl=en&gl=us&output=json&tbm=isch&ijn=2&source=test'
       @json = @response.parse
     end
 
@@ -209,6 +240,10 @@ describe "Images resutls - desktop - json" do
         expect(@last_result["source"]).to_not be_empty
       end
     end
+
+    it "no chips if ijn == 2" do
+      expect(@json["chips"]).to be_empty
+     end
 
   end
 
