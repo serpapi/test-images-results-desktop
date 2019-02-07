@@ -67,27 +67,28 @@ describe "Images resutls - desktop - json" do
     describe "verify chips at the top of the page" do
 
       it "number of chips greater than 5" do
-        expect(@json["chips"].size).to be > 5
+        expect(@json["suggested_searches"].size).to be > 5
       end
 
       it 'verify the first chip field' do
-        chip  = @json["chips"].first
+        chip  = @json["suggested_searches"].first
         expect(chip['name']).to_not be_empty
+        expect(chip['chips']).to_not be_empty
+        expect(chip['displayed_link']).to match(/search\?/)
         expect(chip['link']).to_not be_empty
-        expect(chip['link']).to match(/search\?/)
         expect(chip['thumbnail']).to_not be_empty
         expect(chip['thumbnail']).to match(/^data:image\/jpeg;base64/)
       end
 
       it 'verify the last chip field' do
-        chip  = @json["chips"].last
+        chip  = @json["suggested_searches"].last
         expect(chip['name']).to_not be_empty
+        expect(chip['chips']).to_not be_empty
+        expect(chip['displayed_link']).to match(/search\?/)
         expect(chip['link']).to_not be_empty
-        expect(chip['link']).to match(/search\?/)
         expect(chip['thumbnail']).to_not be_empty
         expect(chip['thumbnail']).to match(/^https:\/\/encrypted-tbn0.gstatic.com/)
       end
-
     end
   end
 
@@ -164,7 +165,7 @@ describe "Images resutls - desktop - json" do
     end
 
     it "no chips if ijn == 1" do
-      expect(@json["chips"]).to be_empty
+      expect(@json["suggested_searches"]).to be_empty
     end
 
   end
@@ -242,7 +243,7 @@ describe "Images resutls - desktop - json" do
     end
 
     it "no chips if ijn == 2" do
-      expect(@json["chips"]).to be_empty
+      expect(@json["suggested_searches"]).to be_empty
      end
 
   end
