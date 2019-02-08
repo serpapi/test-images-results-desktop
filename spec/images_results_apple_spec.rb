@@ -74,8 +74,8 @@ describe "Images resutls - desktop - json" do
         chip  = @json["suggested_searches"].first
         expect(chip['name']).to_not be_empty
         expect(chip['chips']).to_not be_empty
-        expect(chip['displayed_link']).to match(/search\?/)
-        expect(chip['link']).to_not be_empty
+        expect(chip['serpapi_link']).to match(/search.json\?/)
+        expect(chip['link']).to match(/\/search\?/)
         expect(chip['thumbnail']).to_not be_empty
         expect(chip['thumbnail']).to match(/^data:image\/jpeg;base64/)
       end
@@ -84,8 +84,8 @@ describe "Images resutls - desktop - json" do
         chip  = @json["suggested_searches"].last
         expect(chip['name']).to_not be_empty
         expect(chip['chips']).to_not be_empty
-        expect(chip['displayed_link']).to match(/search\?/)
-        expect(chip['link']).to_not be_empty
+        expect(chip['serpapi_link']).to match(/search.json\?/)
+        expect(chip['link']).to match(/\/search\?/)
         expect(chip['thumbnail']).to_not be_empty
         expect(chip['thumbnail']).to match(/^https:\/\/encrypted-tbn0.gstatic.com/)
       end
