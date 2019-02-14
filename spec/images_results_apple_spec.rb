@@ -11,7 +11,7 @@ describe "Images resutls - desktop - json" do
   describe "Images results for apple and ijn = 0" do
 
     before :all do
-      @response = HTTP.get @host + '/search.json?q=Coffee&location=Austin%2C+Texas%2C+United+States&hl=en&gl=us&output=json&tbm=isch&ijn=0&source=test'
+      @response = HTTP.get @host + '/search.json?q=Coffee&location=Austin%2C+Texas%2C+United+States&hl=en&gl=us&output=json&tbm=isch&source=test'
       @json = @response.parse
     end
 
@@ -66,6 +66,13 @@ describe "Images resutls - desktop - json" do
 
     describe "verify chips at the top of the page" do
 
+      it "check thumbnail present for the first 10 chips" do
+        @json["suggested_searches"].each_with_index do |chip, index|
+          next if index > 10
+          expect(chip['thumbnail']).to_not be_empty, "thumbnail empty at index: #{index}, name: #{chip['name']}"
+        end
+      end
+
       it "number of chips greater than 5" do
         expect(@json["suggested_searches"].size).to be > 5
       end
@@ -80,15 +87,15 @@ describe "Images resutls - desktop - json" do
         expect(chip['thumbnail']).to match(/^data:image\/jpeg;base64/)
       end
 
-      it 'verify the last chip field' do
+      it 'verify the last chip field - no thumbnail' do
         chip  = @json["suggested_searches"].last
         expect(chip['name']).to_not be_empty
         expect(chip['chips']).to_not be_empty
         expect(chip['serpapi_link']).to match(/search.json\?/)
         expect(chip['link']).to match(/\/search\?/)
-        expect(chip['thumbnail']).to_not be_empty
-        expect(chip['thumbnail']).to match(/^https:\/\/encrypted-tbn0.gstatic.com/)
+        expect(chip['thumbnail']).to be_nil
       end
+
     end
   end
 
