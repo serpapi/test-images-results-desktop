@@ -34,7 +34,8 @@ describe "Images resutls - desktop - json" do
     #   "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMzLN9iUjPiaNdA8w7NtzSTuJI0UPbDFOQKh3IXF6buUYmkaNr",
     #   "original": "https://as-images.apple.com/is/image/AppleInc/aos/published/images/o/g/og/default/og-default?wid=1200&hei=630&fmt=jpeg&qlt=95&op_usm=0.5,0.5&.v=1525370171638",
     #   "title": "Buy Mac Accessories - Apple",
-    #   "source": "apple.com"
+    #   "source": "apple.com",
+    #   "link": "apple.com/",
     # },
     describe "has a first news results" do
 
@@ -62,6 +63,10 @@ describe "Images resutls - desktop - json" do
         expect(@first_result["source"]).to_not be_empty
       end
 
+      it "has a source" do
+        expect(@first_result["link"]).to_not be_empty
+      end
+      
     end
 
     describe "verify chips at the top of the page" do
@@ -143,6 +148,11 @@ describe "Images resutls - desktop - json" do
       it "has a source" do
         expect(@first_result["source"]).to_not be_empty
       end
+
+      it "has a link" do
+        expect(@first_result["link"]).to_not be_empty
+      end
+      
     end
 
     describe "has a last news results" do
@@ -168,6 +178,10 @@ describe "Images resutls - desktop - json" do
 
       it "has a source" do
         expect(@last_result["source"]).to_not be_empty
+      end
+
+      it "has a link" do
+        expect(@last_result["link"]).to_not be_empty
       end
     end
 
@@ -221,6 +235,10 @@ describe "Images resutls - desktop - json" do
       it "has a source" do
         expect(@first_result["source"]).to_not be_empty
       end
+
+      it "has a link" do
+        expect(@first_result["link"]).to_not be_empty
+      end
    end
 
     describe "has a last news results" do
@@ -246,6 +264,10 @@ describe "Images resutls - desktop - json" do
 
       it "has a source" do
         expect(@last_result["source"]).to_not be_empty
+      end
+
+      it "has a link" do
+        expect(@last_result["link"]).to_not be_empty
       end
     end
 
@@ -274,7 +296,7 @@ describe "Images resutls - desktop - json" do
       expect(@json["images_results"].size).to eq(100)
     end
 
-    describe "has a first news results" do
+    describe "has a first results" do
 
       before :all do
         @first_result = @json["images_results"].first
@@ -298,6 +320,10 @@ describe "Images resutls - desktop - json" do
 
       it "has a source" do
         expect(@first_result["source"]).to_not be_empty
+      end
+
+      it "has a link" do
+        expect(@first_result["link"]).to_not be_empty
       end
    end
   end
