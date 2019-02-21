@@ -19,11 +19,11 @@ describe "Images resutls - desktop - json" do
       expect(@response.code).to be(200)
     end
 
-    it "contains News Results array" do
+    it "images_results is an array" do
       expect(@json["images_results"]).to be_an(Array)
     end
 
-    it "News Results array has more than 10 results" do
+    it "images Results array has more than 10 results" do
       expect(@json["images_results"].size).to be > 50
     end
 
@@ -37,7 +37,7 @@ describe "Images resutls - desktop - json" do
     #   "source": "apple.com",
     #   "link": "apple.com/",
     # },
-    describe "has a first news results" do
+    describe "has a first images results" do
 
       before :all do
         @first_result = @json["images_results"][0]
@@ -63,7 +63,7 @@ describe "Images resutls - desktop - json" do
         expect(@first_result["source"]).to_not be_empty
       end
 
-      it "has a source" do
+      it "has a link" do
         expect(@first_result["link"]).to_not be_empty
       end
       
@@ -115,15 +115,15 @@ describe "Images resutls - desktop - json" do
       expect(@response.code).to be(200)
     end
 
-    it "contains News Results array" do
+    it "contains images Results array" do
       expect(@json["images_results"]).to be_an(Array)
     end
 
-    it "News Results array has more than 10 results" do
+    it "images Results array has more than 10 results" do
       expect(@json["images_results"].size).to be > 50
     end
 
-    describe "has a first news results" do
+    describe "has a first images results" do
 
       before :all do
         @first_result = @json["images_results"][0]
@@ -155,7 +155,7 @@ describe "Images resutls - desktop - json" do
       
     end
 
-    describe "has a last news results" do
+    describe "has a last images results" do
       before :all do
         @last_result = @json["images_results"].last
       end
@@ -241,7 +241,7 @@ describe "Images resutls - desktop - json" do
       end
    end
 
-    describe "has a last news results" do
+    describe "has a last images results" do
       before :all do
         @last_result = @json["images_results"].last
       end
