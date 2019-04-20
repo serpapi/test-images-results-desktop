@@ -12,6 +12,10 @@ all: test
 test:
 	$(test_cmd)
 
+# local rspec call
+rspec: 
+	rspec --format html --out rspec_results.html
+
 # install dependency
 dep:
 	bundle install
